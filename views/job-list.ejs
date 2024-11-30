@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Listings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .job-container {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .job-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .job-actions {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Job Listings</h1>
+  <% if (jobs.length > 0) { %>
+    <% jobs.forEach(job => { %>
+      <div class="job-container">
+        <div class="job-title"><%= job.title %></div>
+        <p><strong>Description:</strong> <%= job.description %></p>
+        <p><strong>Salary:</strong> $<%= job.salary %></p>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No jobs available at the moment.</p>
+  <% } %>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/dashboard">Create Jobs</a>
+        <a href="/company/jobs">Jobs Listed</a>
+        <a href="/applications">Applications</a>
+        <a href="/logout" class="logout-button">Logout</a>
+    </div>
+    <!-- <div class="container">
+        <h1>Create Job</h1>
+        <form action="/api/post/job" method="post">
+            <div class="form-group">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle" required>
+            </div>
+            <div class="form-group">
+                <label for="jobDescription">Job Description:</label>
+                <textarea id="jobDescription" name="jobDescription" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="salary">Salary:</label>
+                <input type="number" id="salary" name="salary"  required>
+            </div>
+            <!-- <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="jobType">Job Type:</label>
+                <select id="jobType" name="jobType" required>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                </select>
+            </div>
+             -->
+            <!-- <div class="form-group">
+                <button type="submit">Create Job</button>
+            </div>
+        </form>
+    </div> --> 
+    <div class="container">
+        <h1>Post a Job</h1>
+        <form action="/api/post/job" method="POST">
+            <!-- Title -->
+            <div class="form-group">
+                <label for="title">Job Title:</label>
+                <input type="text" id="title" name="title" placeholder="Enter job title" required>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description">Job Description:</label>
+                <textarea id="description" name="description" placeholder="Enter job description" rows="5" required></textarea>
+            </div>
+
+            <!-- Salary -->
+            <div class="form-group">
+                <label for="salary">Salary:</label>
+                <input type="number" id="salary" name="salary" placeholder="Enter salary" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Post Job</button>
+        </form>
+    </div>
+
+
+</body>
+</html>

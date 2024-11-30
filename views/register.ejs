@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* General Styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #333;
+}
+
+/* Container */
+.container {
+  width: 500px;
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-in-out;
+  margin-top: 100px;
+  margin-bottom: 150px;
+}
+
+/* Heading */
+.container h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 20px;
+  width: 70%;
+  margin-top: 20px;
+}
+
+/* Labels */
+.form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* Inputs */
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #74ebd5;
+  box-shadow: 0 0 8px rgba(116, 235, 213, 0.6);
+}
+
+/* File Input */
+.form-group input[type="file"] {
+  padding: 5px;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  button[type="submit"] {
+    font-size: 1rem;
+  }
+}
+
+/* Keyframe Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  </style>
+</head>
+<body>
+  
+
+
+
+<div class="container">
+  <h1>Register as <%= role %></h1>
+  <form action="/api/user/register" method="post" enctype="multipart/form-data">
+      <input type="hidden" id="role" name="role" value="<%= role %>">
+
+      <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+          <label for="validDocument">Valid Document:</label>
+          <input type="file" id="validDocument" name="validDocument" required>
+      </div>
+      <div class="form-group">
+        <label for="contactInfo">Contact Info:</label>
+        <input type="text" id="contactInfo" name="contactInfo" required>
+    </div>
+
+      <% if (role === 'Company') { %>
+          <div class="form-group">
+              <label for="companyName">Company Name:</label>
+              <input type="text" id="companyName" name="companyName" required>
+          </div>
+          <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" id="address" name="address" required>
+          </div>
+          
+      <% } %>
+
+      <div class="form-group">
+          <button type="submit">Register</button>
+      </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const role = localStorage.getItem('selectedRole');
+      if (role && !document.getElementById('role').value) {
+          document.getElementById('role').value = role;
+      }
+  });
+</script>
+</body>
+</html>
