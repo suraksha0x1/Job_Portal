@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicants for <%= jobTitle %></title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            text-align: center;
+            font-size: 16px;
+        }
+        .btn-update {
+      color: white;
+      background-color: blue;
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+    }
+    </style>
+</head>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Applicants</title>
+</head>
+<body>
+    <h1>Applicants for Job: <%= jobTitle %></h1>
+
+    <% if (applicants.length === 0) { %>
+        <p>No applicants for this job.</p>
+    <% } else { %>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Job ID</th>
+                    <th>Job Title</th>
+                    <th>Candidate Name</th>
+                    <th>Email</th>
+                    <th>Valid Document</th>
+                    <th>Contact Info</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% applicants.forEach(applicant => { %>
+                    <tr id="applicant-<%= applicant.applicationId %>">
+                        <td><%= applicant.jobId %></td>
+                        <td><%= applicant.jobTitle %></td>
+                        <td><%= applicant.candidateName %></td>
+                        <td><%= applicant.candidateEmail %></td>
+                        <td>
+                            <% if (applicant.validDocument && applicant.validDocument !== "N/A") { %>
+                                <a href="<%= applicant.validDocument %>" target="_blank">View Document</a>
+                            <% } else { %>
+                                N/A
+                            <% } %>
+                        </td>
+                        <td><%= applicant.contactInfo %></td>
+                        <td class="status"><%= applicant.status %></td>
+                        <td>
+                            <!-- Approve button -->
+                            <button onclick="updateStatus('<%= applicant.applicationId %>', 'approved')">Approve</button>
+                            
+                            <!-- Reject button -->
+                            <button onclick="updateStatus('<%= applicant.applicationId %>', 'rejected')">Reject</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+            
+
+
+
+            <!-- <tbody>
+                <% applicants.forEach(applicant => { %>
+                    <tr>
+                        <td><%= applicant.jobId %></td>
+                        <td><%= applicant.jobTitle %></td>
+                        <td><%= applicant.candidateName %></td>
+                        <td><%= applicant.candidateEmail %></td>
+                        <td>
+                            <% if (applicant.validDocument && applicant.validDocument !== "N/A") { %>
+                                <a href="<%= applicant.validDocument %>" target="_blank">View Document</a>
+                            <% } else { %>
+                                N/A
+                            <% } %>
+                        </td>
+                        <td><%= applicant.contactInfo %></td>
+                        <td><%= applicant.status %></td>
+                        <td>
+                            <form action="/applications/<%= applicant.applicationId %>/status" method="POST" style="display:inline;">
+                                <input type="hidden" name="status" value="approved">
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                            <form action="/applications/<%= applicant.applicationId %>/status" method="POST" style="display:inline;">
+                                <input type="hidden" name="status" value="rejected">
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table> -->
+        </table>
+    <% } %>
+</body>
+<script>
+    // async function updateStatus(applicationId, status) {
+    //     try {
+    //         // Send an AJAX request to the server
+    //         const response = await fetch(`/applications/${applicationId}/status`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ status }), // Send the new status
+    //         });
+
+    //         if (response.ok) {
+    //             // Get the updated data from the server
+    //             const updatedApplication = await response.json();
+
+    //             // Find the row for the updated application
+    //             const row = document.getElementById(`applicant-${applicationId}`);
+                
+    //             // Update the status in the table dynamically
+    //             row.querySelector('.status').innerText = updatedApplication.status;
+    //         } else {
+    //             // Show an error message if something goes wrong
+    //             const error = await response.json();
+    //             alert(`Error: ${error.error}`);
+    //         }
+    //     } catch (err) {
+    //         console.error('Error updating status:', err);
+    //         alert('An error occurred. Please try again.');
+    //     }
+    // }
+    async function updateStatus(applicationId, status) {
+    try {
+        // Send an AJAX request to the server
+        const response = await fetch(`/applications/${applicationId}/status`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status }), // Send the new status
+        });
+
+        if (response.ok) {
+            // Get the updated data from the server
+            const updatedApplication = await response.json();
+
+            // Find the row for the updated application
+            const row = document.getElementById(`applicant-${applicationId}`);
+            
+            // Update the status in the table dynamically
+            row.querySelector('.status').innerText = updatedApplication.status;
+
+            // Show a success alert
+            alert(`Status successfully updated to "${updatedApplication.status}".`);
+        } else {
+            // Show an error message if something goes wrong
+            const error = await response.json();
+            alert(`Error: ${error.error}`);
+        }
+    } catch (err) {
+        console.error('Error updating status:', err);
+        alert('An error occurred. Please try again.');
+    }
+}
+
+</script>
+
+</html>

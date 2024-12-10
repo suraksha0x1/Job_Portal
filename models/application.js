@@ -26,75 +26,143 @@
 
 
 
-const {DataTypes}= require('sequelize');
-const {sequelize} = require('../middleware/config/db');
-// const Todo = require('./Todo');
-const User = require('./user')
-const job = require('./job')
-const Application = sequelize.define('applications',{
+// const {DataTypes}= require('sequelize');
+// const {sequelize} = require('../middleware/config/db');
+// // const Todo = require('./Todo');
+// const User = require('./user')
+// const job = require('./job')
+// const Application = sequelize.define('applications',{
 
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-    },
+//     id: {
+//         type: DataTypes.INTEGER,
+//         primaryKey: true,
+//         autoIncrement: true,
+//     },
+//     name: {
+//       type: DataTypes.STRING,
+//       unique: true,
+//       allowNull: false,
+//     },
    
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: {
-          msg: "Email address is not valid.", // Custom error message
-        },
-      },
-    },
+//     email: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       unique: true,
+//       validate: {
+//         isEmail: {
+//           msg: "Email address is not valid.", // Custom error message
+//         },
+//       },
+//     },
 
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      required: true,
-      validate: {
-        isNumeric: true, // Ensures only numeric digits are entered
-        len: [10, 10], // Ensures exactly 10 digits
-      },
+//     phone: {
+//       type: DataTypes.STRING,
+//       allowNull: true,
+//       required: true,
+//       validate: {
+//         isNumeric: true, // Ensures only numeric digits are entered
+//         len: [10, 10], // Ensures exactly 10 digits
+//       },
+//     },
+//     applicantID_user: {
+//       type: DataTypes.INTEGER,
+//       allowNull: false,
+//       references: {
+//         model: 'Users', // Assuming 'Users' is the name of the users table
+//         key: 'id',
+//       },
+//       onUpdate: 'CASCADE',
+//       onDelete: 'CASCADE',
+//     },
+    
+//     companyID_user: {
+//       type: DataTypes.INTEGER,
+//       allowNull: false,
+//       references: {
+//         model: 'Users', // Assuming 'Users' is the name of the users table
+//         key: 'id',
+//       },
+//       onUpdate: 'CASCADE',
+//       onDelete: 'CASCADE',
+//     },
+    
+//   }, {
+//     timestamps: true,
+    
+//     }, { sequelize, modelName: 'applications' });
+    
+//     User.hasMany(Application, { foreignKey: 'applicantID_user' });
+//     User.hasMany(Application, { foreignKey: 'companyID_user' });
+// Application.belongsTo(User, { foreignKey: 'applicantID_user' });
+// Application.belongsTo(job, { foreignKey: 'companyID_user' });
+
+
+// module.exports = Application;
+
+
+
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/db");
+const User = require("./user");
+const Job = require("./job");
+
+const Application = sequelize.define(
+  "Application",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    applicantID_user: {
+    jobId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users', // Assuming 'Users' is the name of the users table
-        key: 'id',
+        model: Job,
+        key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
-    
-    companyID_user: {
+    applicantId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users', // Assuming 'Users' is the name of the users table
-        key: 'id',
+        model: User,
+        key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
-    
-  }, {
+    companyId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    },
+    status: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          defaultValue: 'pending', // Default status
+        }
+  },
+  {
     timestamps: true,
-    
-    }, { sequelize, modelName: 'applications' });
-    
-    User.hasMany(Application, { foreignKey: 'applicantID_user' });
-    User.hasMany(Application, { foreignKey: 'companyID_user' });
-Application.belongsTo(User, { foreignKey: 'applicantID_user' });
-Application.belongsTo(job, { foreignKey: 'companyID_user' });
+  }
+);
+
+// Relationships
+
+Application.belongsTo(User, { foreignKey: "applicantId", as: "candidate" });
+
+
+Application.belongsTo(Job, { foreignKey: "jobId", as: "company" });
+
+Job.hasMany(Application, { foreignKey: "jobId" });
 
 
 module.exports = Application;

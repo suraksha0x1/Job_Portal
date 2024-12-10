@@ -1,0 +1,157 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Listings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .job-container {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .job-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .job-actions {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Job Listings</h1>
+  <% if (jobs.length > 0) { %>
+    <% jobs.forEach(job => { %>
+      <div class="job-container">
+        <div class="job-title"><%= job.title %></div> -->
+        <!-- <p><strong>Title:</strong> <%= job.title %></p>
+        <p><strong>Description:</strong> <%= job.description %></p>
+        <p><strong>Salary:</strong> $<%= job.salary %></p>
+        
+        <a  class="btb btn-delete" href="/delete/<%= job.id%>">Delete</a>
+        <a href="/update/<%= job.id %>">Update</a>
+         <a href ="/getall">get</a> -->
+       
+      
+      <!-- </div>
+      
+    <% }) %>
+  <% } else { %>
+    <p>No jobs available at the moment.</p>
+  <% } %>
+  <a href="/dashboard">Return to dashboard</a>
+</body>
+</html>  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Listings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .job-container {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .job-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .job-actions {
+      margin-top: 10px;
+    }
+    .btn-delete {
+      color: white;
+      background-color: red;
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-delete:hover {
+      background-color: darkred;
+    }
+    .btn-update {
+      color: white;
+      background-color: blue;
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-update:hover {
+      background-color: darkblue;
+    }
+  </style>
+</head>
+<body>
+  <h1>Job Listings</h1>
+  <% if (jobs.length > 0) { %>
+    <% jobs.forEach(job => { %>
+      <div class="job-container" data-job-id="<%= job.id %>">
+        <p><strong>Title:</strong> <%= job.title %></p>
+        <p><strong>Description:</strong> <%= job.description %></p>
+        <p><strong>Salary:</strong> $<%= job.salary %></p>
+
+        <!-- Delete and Update Buttons -->
+        <button class="btn-delete" onclick="deleteJob('<%= job.id %>')">Delete</button>
+        <a href="/update/<%= job.id %>" class="btn-update">Update</a>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No jobs available at the moment.</p>
+  <% } %>
+
+  <a href="/dashboard">Return to Dashboard</a>
+
+  <script>
+    // Function to handle job deletion
+    async function deleteJob(jobId) {
+      if (!confirm("Are you sure you want to delete this job?")) {
+        return; // Exit if user cancels
+      }
+
+      try {
+        // Send DELETE request to the server
+        const response = await fetch(`/delete/${jobId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+          // Remove the job from the DOM
+          const jobContainer = document.querySelector(`[data-job-id="${jobId}"]`);
+          if (jobContainer) {
+            jobContainer.remove();
+          }
+          alert("Job deleted successfully!");
+        } else {
+          const error = await response.json();
+          alert(`Error: ${error.error}`);
+        }
+      } catch (err) {
+        console.error("Error deleting job:", err);
+        alert("An error occurred while deleting the job. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html>
+

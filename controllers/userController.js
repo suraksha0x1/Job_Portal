@@ -189,10 +189,7 @@ const RegisterUser = async (req, res) => {
         });
 
         // Redirect the user to the homepage
-        res.status(200).json({
-            success: true,
-            message: "Logout successful",
-        });
+        res.redirect('/login');
     } catch (error) {
         console.error("Error during logout:", error.message);
 

@@ -81,46 +81,99 @@
 
 //   return User;
 // };
-const {DataTypes}= require('sequelize');
-const {sequelize} = require('../middleware/config/db');
-// const Todo = require('./Todo');
-const User = require('./user')
-const job = sequelize.define('jobs',{
+// const {DataTypes}= require('sequelize');
+// const {sequelize} = require('../middleware/config/db');
+// // const Todo = require('./Todo');
+// const User = require('./user')
+// const job = sequelize.define('jobs',{
 
+//     id: {
+//         type: DataTypes.INTEGER,
+//         primaryKey: true,
+//         autoIncrement: true,
+//     },
+
+//     title: {
+//         type: DataTypes.STRING,
+//         unique:true,
+//         allowNull: false,
+//     },
+//     description: {
+//         type: DataTypes.STRING,
+//         allowNull: false,
+//         minilength: [50,],
+//         maxlength: [350,],
+//     },
+//     salary: {
+//         type: DataTypes.NUMBER,
+//         allowNull: false,
+//         minilength:[4,],
+//         maxlength: [9,],
+//     },
+//     companyId: {
+//         type: DataTypes.INTEGER,
+//         allowNull: false,
+//         references: {
+//           model: User, // Model the foreign key refers to
+//           key: 'id'    // Column in the User model
+//         }
+//       }
+//     }, { sequelize, modelName: 'jobs' });
+    
+//     User.hasMany(job, { foreignKey: 'companyId' });
+// job.belongsTo(User, { foreignKey: 'companyId' });
+
+// module.exports = job;
+
+
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/db");
+const User = require("./user");
+
+const Job = sequelize.define(
+  "jobs",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
-
     title: {
-        type: DataTypes.STRING,
-        unique:true,
-        allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
     },
     description: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        minilength: [50,],
-        maxlength: [350,],
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [10, 350], // Minimum and maximum length for description
+      },
     },
     salary: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
-        minilength:[4,],
-        maxlength: [9,],
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: {
+        min: 1000, // Minimum salary
+        max: 99999999, // Maximum salary
+      },
     },
     companyId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: User, // Model the foreign key refers to
-          key: 'id'    // Column in the User model
-        }
-      }
-    }, { sequelize, modelName: 'jobs' });
-    
-    User.hasMany(job, { foreignKey: 'companyId' });
-job.belongsTo(User, { foreignKey: 'companyId' });
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+      },
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = job;
+// Relationships
+User.hasMany(Job, { foreignKey: "companyId" });
+Job.belongsTo(User, { foreignKey: "companyId" });
+
+module.exports = Job;

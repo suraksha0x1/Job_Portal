@@ -1,0 +1,25 @@
+<!-- views/application/applicationsByCandidate.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Applications</title>
+</head>
+<body>
+    <h1>Your Applications</h1>
+
+    <div>
+        <% applications.forEach(application => { %>
+            <div>
+                <h3><%= application.Job.title %></h3>
+                <p><strong>Status:</strong> <%= application.status %></p>
+                <p><strong>Job Description:</strong> <%= application.Job.description %></p>
+                <p><strong>Salary:</strong> <%= application.Job.salary %></p>
+            </div>
+        <% }) %>
+    </div>
+
+    <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

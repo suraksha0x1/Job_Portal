@@ -1,0 +1,78 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ALL AVAILABLE JOBS</h1>
+  <% if (jobs.length > 0) { %>
+    <% jobs.forEach(job => { %>
+      <div class="job-container">
+        <div class="job-title"><%= job.title %></div> -->
+        <!-- <p><strong>Title:</strong> <%= job.title %></p>
+        <p><strong>Description:</strong> <%= job.description %></p>
+        <p><strong>Salary:</strong> $<%= job.salary %></p>
+        <p><strong>Company:</strong> <%= job.User.companyName %></p>
+        <p><strong>Address:</strong> <%= job.User.address %></p>
+
+
+<a href="/apply/<%= job.id %>">Appply now</a>
+         -->
+       
+        <!-- <a href ="/getall">get</a> -->
+       
+       
+      <!-- </div>
+    <% }) %>
+  <% } else { %>
+    <p>No jobs available at the moment.</p>
+  <% } %>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALL AVAILABLE JOBS</title>
+    <style>
+        .job-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>ALL AVAILABLE JOBS</h1>
+    <% if (jobs.length > 0) { %>
+        <% jobs.forEach(job => { %>
+            <div class="job-container">
+                <p><strong>Title:</strong> <%= job.title %></p>
+                <p><strong>Description:</strong> <%= job.description %></p>
+                <p><strong>Salary:</strong> $<%= job.salary %></p>
+                <p><strong>Company:</strong> <%= job.User.companyName %></p>
+                <p><strong>Address:</strong> <%= job.User.address %></p>
+
+                <!-- Apply button with a click handler -->
+                <a href="/apply/<%= job.id %>" onclick="return showConfirmation()">Apply now</a>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>No jobs available at the moment.</p>
+    <% } %>
+
+    <script>
+        // Function to show the confirmation dialog
+        function showConfirmation() {
+            alert('Application submitted successfully!');
+            return true; // Allow navigation to proceed
+        }
+    </script>
+</body>
+</html>

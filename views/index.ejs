@@ -1,34 +1,143 @@
 <head>
   <style>
-    .container {
-      text-align: center;
-      margin-top: 50px;
-    }
-    .card {
-      display: inline-block;
-      width: 200px;
-      height: 150px;
-      margin: 20px;
-      padding: 20px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-    }
-    .card h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    .card p {
-      font-size: 16px;
-      color: #555;
-    }
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(120deg, #af67b8 0%, #583987 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: grey;
+  border-radius: 10px;
+  padding: 25px;
+  width: calc(33.33% - 20px);
+  margin: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  float: left;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: black;
+}
+
+.card h2 {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.card p {
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Clear the float */
+.container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Admin card specific styling */
+.card:last-child {
+  background: purple;
+}
+
+.card:last-child h2,
+.card:last-child p {
+  color: white;
+}
+
+.card:last-child:hover {
+  background: #355585;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .card {
+    width: calc(50% - 20px);
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    width: calc(100% - 20px);
+    margin: 10px;
+  }
+  
+  .container {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+}
+
+/* Add hover effect on cards */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+  /* opacity: 1; */
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+}
+
+/* Add slight bounce on click */
+.card:active {
+  transform: scale(0.98);
+}
   </style>
 </head>
 
@@ -43,7 +152,7 @@
       <h2>Register as Candidate</h2>
       <p>For job seekers</p>
     </div>
-  </div>
+  <!-- </div> -->
   <div class="card" onclick="selectRole('admin')">
     <h2>Register as admin</h2>
     <p>For admin</p>
